@@ -1,6 +1,7 @@
 services:
   - type: web
     name: careerpulse-growth-path
+    plan: free
     env: python
     rootDir: stitch_career_growth_assistant
     buildCommand: pip install -r requirements.txt
