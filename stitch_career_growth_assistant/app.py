@@ -107,6 +107,9 @@ def delete_task(task_id):
     task = Task.query.get_or_404(task_id)
     db.session.delete(task)
     db.session.commit()
+    # Redirect back to the page the user came from, or default to roadmap
+    if request.referrer:
+        return redirect(request.referrer)
     return redirect(url_for('roadmap'))
 
 @app.route('/add_job', methods=['POST'])

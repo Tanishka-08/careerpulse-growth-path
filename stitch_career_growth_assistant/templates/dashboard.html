@@ -52,6 +52,11 @@
                         </div>
                         <div class="flex items-center gap-3">
                             <span class="bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs font-bold uppercase">Priority {{ task.priority }}</span>
+                            <form action="/delete_task/{{ task.id }}" method="POST" onsubmit="this.querySelectorAll('button').forEach(b => b.disabled = true);" class="inline">
+                                <button type="submit" class="text-slate-400 hover:text-red-600 transition-colors flex items-center justify-center" title="Delete Task">
+                                    <span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+                                </button>
+                            </form>
                         </div>
                     </div>
                     {% endfor %}
