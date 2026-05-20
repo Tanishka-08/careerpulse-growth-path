@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv/
+venv/
+ENV/
+env/
+
+# Databases & local instances
+instance/
+*.db
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# Large temporary/archive files
+*.zip
+*.tar.gz
+*.exe
+*.unk
+
+# IDEs and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

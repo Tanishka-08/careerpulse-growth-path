@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Calendar | CareerPulse{% endblock %}
+
+{% block content %}
+<main class="flex-1 flex overflow-hidden">
+    <!-- Primary Calendar Area -->
+    <section class="flex-1 flex flex-col p-6 overflow-y-auto scrollbar-hide">
+        <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center gap-6">
+                <h1 class="text-3xl font-bold text-slate-900">September 2024</h1>
+                <div class="flex items-center bg-white border border-slate-200 rounded-lg p-1 shadow-sm">
+                    <button class="p-1.5 hover:bg-slate-50 rounded text-slate-600">
+                        <span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+                    </button>
+                    <button class="px-4 py-1.5 text-xs font-bold text-slate-600 hover:bg-slate-50 rounded">Today</button>
+                    <button class="p-1.5 hover:bg-slate-50 rounded text-slate-600">
+                        <span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="flex bg-slate-100 rounded-lg p-1">
+                    <button class="px-4 py-1.5 text-xs font-bold text-slate-500 hover:text-blue-600 transition-colors">Day</button>
+                    <button class="px-4 py-1.5 text-xs font-bold text-slate-500 hover:text-blue-600 transition-colors">Week</button>
+                    <button class="px-4 py-1.5 text-xs font-bold bg-white text-blue-600 rounded shadow-sm">Month</button>
+                </div>
+                <button class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-sm shadow-md hover:translate-y-[-1px] transition-all">
+                    <span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                    Add Event
+                </button>
+            </div>
+        </div>
+
+        <!-- Grid Calendar -->
+        <div class="flex-1 bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden flex flex-col">
+            <!-- Weekday Headers -->
+            <div class="grid grid-cols-7 border-b border-slate-200 bg-slate-50/50">
+                <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest border-r border-slate-200">Sun</div>
+                <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest border-r border-slate-200">Mon</div>
+                <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest border-r border-slate-200">Tue</div>
+                <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest border-r border-slate-200">Wed</div>
+                <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest border-r border-slate-200">Thu</div>
+                <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest border-r border-slate-200">Fri</div>
+                <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest">Sat</div>
+            </div>
+
+            <!-- Calendar Days Grid -->
+            <div class="flex-1 grid grid-cols-7 auto-rows-fr">
+                <!-- Example Row -->
+                <div class="border-r border-b border-slate-100 p-2 min-h-[120px] bg-slate-50/30 text-slate-400 font-medium">27</div>
+                <div class="border-r border-b border-slate-100 p-2 min-h-[120px] bg-slate-50/30 text-slate-400 font-medium">28</div>
+                <div class="border-r border-b border-slate-100 p-2 min-h-[120px] bg-slate-50/30 text-slate-400 font-medium">29</div>
+                <div class="border-r border-b border-slate-100 p-2 min-h-[120px] bg-slate-50/30 text-slate-400 font-medium">30</div>
+                <div class="border-r border-b border-slate-100 p-2 min-h-[120px] bg-slate-50/30 text-slate-400 font-medium">31</div>
+                <div class="border-r border-b border-slate-100 p-2 min-h-[120px] text-slate-700 font-bold">1</div>
+                <div class="border-b border-slate-100 p-2 min-h-[120px] text-slate-700 font-bold">2</div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}Timer | CareerPulse{% endblock %}
+
+{% block content %}
+<main class="flex-1 flex flex-col min-h-screen p-8 max-w-[1400px] mx-auto w-full items-center justify-center">
+    <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-slate-900 mb-4">Focus Timer</h1>
+        <p class="text-slate-500">Boost your productivity with Pomodoro sessions.</p>
+    </div>
+
+    <div class="bg-white rounded-3xl border border-slate-200 shadow-xl p-12 max-w-md w-full flex flex-col items-center">
+        <!-- Timer Display -->
+        <div class="relative w-64 h-64 flex items-center justify-center mb-8">
+            <svg class="absolute inset-0 w-full h-full transform -rotate-90">
+                <circle class="text-slate-100" cx="128" cy="128" fill="transparent" r="120" stroke="currentColor" stroke-width="12"></circle>
+                <circle id="timer-ring" class="text-blue-600 transition-all duration-1000 ease-linear" cx="128" cy="128" fill="transparent" r="120" stroke="currentColor" stroke-dasharray="753.98" stroke-dashoffset="0" stroke-width="12" stroke-linecap="round"></circle>
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span id="time-display" class="text-6xl font-black text-slate-900 tracking-tighter">25:00</span>
+                <span id="mode-display" class="text-sm font-bold uppercase tracking-widest text-slate-400 mt-2">Focus</span>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center gap-6 mb-8">
+            <button id="btn-reset" class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition-colors">
+                <span class="material-symbols-outlined" data-icon="refresh">refresh</span>
+            </button>
+            <button id="btn-play" class="w-20 h-20 rounded-full bg-blue-600 flex items-center justify-center text-white shadow-lg hover:bg-blue-700 hover:scale-105 transition-all">
+                <span class="material-symbols-outlined text-4xl" data-icon="play_arrow" id="icon-play">play_arrow</span>
+            </button>
+            <button id="btn-skip" class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition-colors">
+                <span class="material-symbols-outlined" data-icon="skip_next">skip_next</span>
+            </button>
+        </div>
+
+        <!-- Mode Selectors -->
+        <div class="flex bg-slate-100 p-1 rounded-lg w-full">
+            <button onclick="setMode('focus')" class="flex-1 py-2 text-sm font-bold text-slate-600 bg-white shadow-sm rounded-md transition-colors" id="tab-focus">Focus</button>
+            <button onclick="setMode('short')" class="flex-1 py-2 text-sm font-bold text-slate-500 hover:text-slate-600 rounded-md transition-colors" id="tab-short">Short Break</button>
+            <button onclick="setMode('long')" class="flex-1 py-2 text-sm font-bold text-slate-500 hover:text-slate-600 rounded-md transition-colors" id="tab-long">Long Break</button>
+        </div>
+        
+        <form action="{{ url_for('log_session') }}" method="POST" id="log-form" class="mt-8 hidden w-full">
+            <input type="hidden" name="duration" id="duration-input" value="25">
+            <button type="submit" class="w-full bg-emerald-100 text-emerald-700 font-bold py-3 rounded-lg hover:bg-emerald-200 transition-colors">Log Session Completed!</button>
+        </form>
+    </div>
+</main>
+
+<script>
+    let timeLeft = 25 * 60;
+    let totalTime = 25 * 60;
+    let isRunning = false;
+    let timerInterval = null;
+    let currentMode = 'focus';
+
+    const display = document.getElementById('time-display');
+    const ring = document.getElementById('timer-ring');
+    const playBtn = document.getElementById('btn-play');
+    const iconPlay = document.getElementById('icon-play');
+    const resetBtn = document.getElementById('btn-reset');
+    const modeDisplay = document.getElementById('mode-display');
+    
+    function formatTime(seconds) {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function updateDisplay() {
+        display.textContent = formatTime(timeLeft);
+        const offset = 753.98 - (timeLeft / totalTime) * 753.98;
+        ring.style.strokeDashoffset = offset;
+    }
+
+    function setMode(mode) {
+        isRunning = false;
+        clearInterval(timerInterval);
+        iconPlay.textContent = 'play_arrow';
+        playBtn.classList.replace('bg-orange-500', 'bg-blue-600');
+        playBtn.classList.replace('hover:bg-orange-600', 'hover:bg-blue-700');
+        currentMode = mode;
+        
+        document.getElementById('tab-focus').className = 'flex-1 py-2 text-sm font-bold text-slate-500 hover:text-slate-600 rounded-md transition-colors';
+        document.getElementById('tab-short').className = 'flex-1 py-2 text-sm font-bold text-slate-500 hover:text-slate-600 rounded-md transition-colors';
+        document.getElementById('tab-long').className = 'flex-1 py-2 text-sm font-bold text-slate-500 hover:text-slate-600 rounded-md transition-colors';
+        document.getElementById('log-form').classList.add('hidden');
+
+        if (mode === 'focus') {
+            timeLeft = 25 * 60;
+            totalTime = 25 * 60;
+            modeDisplay.textContent = 'Focus';
+            document.getElementById('tab-focus').classList.add('bg-white', 'shadow-sm', 'text-slate-600');
+            document.getElementById('duration-input').value = '25';
+        } else if (mode === 'short') {
+            timeLeft = 5 * 60;
+            totalTime = 5 * 60;
+            modeDisplay.textContent = 'Short Break';
+            document.getElementById('tab-short').classList.add('bg-white', 'shadow-sm', 'text-slate-600');
+        } else {
+            timeLeft = 15 * 60;
+            totalTime = 15 * 60;
+            modeDisplay.textContent = 'Long Break';
+            document.getElementById('tab-long').classList.add('bg-white', 'shadow-sm', 'text-slate-600');
+        }
+        updateDisplay();
+    }
+
+    playBtn.addEventListener('click', () => {
+        if (isRunning) {
+            clearInterval(timerInterval);
+            iconPlay.textContent = 'play_arrow';
+            playBtn.classList.replace('bg-orange-500', 'bg-blue-600');
+            playBtn.classList.replace('hover:bg-orange-600', 'hover:bg-blue-700');
+        } else {
+            iconPlay.textContent = 'pause';
+            playBtn.classList.replace('bg-blue-600', 'bg-orange-500');
+            playBtn.classList.replace('hover:bg-blue-700', 'hover:bg-orange-600');
+            timerInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    iconPlay.textContent = 'play_arrow';
+                    if(currentMode === 'focus') {
+                        document.getElementById('log-form').classList.remove('hidden');
+                    }
+                }
+            }, 1000);
+        }
+        isRunning = !isRunning;
+    });
+
+    resetBtn.addEventListener('click', () => setMode(currentMode));
+</script>
+{% endblock %}

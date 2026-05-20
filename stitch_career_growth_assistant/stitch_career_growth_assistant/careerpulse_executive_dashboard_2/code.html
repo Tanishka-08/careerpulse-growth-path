@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#4edea3",
+                    "surface-container-high": "#eae7e9",
+                    "on-secondary-fixed": "#00174b",
+                    "inverse-on-surface": "#f3f0f2",
+                    "surface-bright": "#fcf8fa",
+                    "on-error-container": "#93000a",
+                    "primary-fixed-dim": "#bec6e0",
+                    "surface-tint": "#565e74",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#131b2e",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#002113",
+                    "surface-container-highest": "#e4e2e4",
+                    "surface-variant": "#e4e2e4",
+                    "tertiary-fixed": "#6ffbbe",
+                    "tertiary": "#000000",
+                    "primary": "#000000",
+                    "background": "#fcf8fa",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#303032",
+                    "on-secondary-fixed-variant": "#003ea8",
+                    "on-surface": "#1b1b1d",
+                    "surface-dim": "#dcd9db",
+                    "secondary-container": "#316bf3",
+                    "inverse-primary": "#bec6e0",
+                    "outline-variant": "#c6c6cd",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-tertiary-container": "#009668",
+                    "secondary-fixed": "#dbe1ff",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "surface-container": "#f0edef",
+                    "on-background": "#1b1b1d",
+                    "on-secondary-container": "#fefcff",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#131b2e",
+                    "surface": "#fcf8fa",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "tertiary-container": "#002113",
+                    "error": "#ba1a1a",
+                    "secondary": "#0051d5",
+                    "outline": "#76777d",
+                    "primary-fixed": "#dae2fd",
+                    "surface-container-low": "#f6f3f5",
+                    "on-primary-container": "#7c839b",
+                    "secondary-fixed-dim": "#b4c5ff",
+                    "on-surface-variant": "#45464d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.8rem",
+                    "xl": "1.2rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "24px",
+                    "xs": "8px",
+                    "base": "4px",
+                    "gutter": "24px",
+                    "max_width": "1280px",
+                    "xl": "64px",
+                    "sm": "16px",
+                    "lg": "40px",
+                    "margin": "32px"
+            },
+            "fontFamily": {
+                    "h1": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "h3": ["Inter"],
+                    "h2": ["Inter"],
+                    "stat-number": ["Inter"]
+            },
+            "fontSize": {
+                    "h1": ["36px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "h3": ["18px", {"lineHeight": "1.4", "letterSpacing": "0em", "fontWeight": "600"}],
+                    "h2": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "stat-number": ["28px", {"lineHeight": "1", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #F8FAFC;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-background">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-white border-r border-slate-200 w-64 shadow-none font-['Inter'] text-sm font-medium">
+<div class="p-6 flex flex-col gap-2">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white" data-icon="rocket_launch">rocket_launch</span>
+</div>
+<div>
+<h2 class="text-secondary font-black leading-tight">Executive Dashboard</h2>
+<p class="text-[10px] uppercase tracking-widest text-slate-400">Career Growth Path</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-2">
+<!-- Home (Active) -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg mx-2 my-1 transition-transform duration-200 hover:translate-x-1 bg-slate-50 text-secondary border-r-4 border-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Home</span>
+</a>
+<!-- Inactive Tabs -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg mx-2 my-1 transition-transform duration-200 hover:translate-x-1 text-slate-600 hover:bg-slate-50" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span>Roadmap</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg mx-2 my-1 transition-transform duration-200 hover:translate-x-1 text-slate-600 hover:bg-slate-50" href="#">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+<span>Progress</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg mx-2 my-1 transition-transform duration-200 hover:translate-x-1 text-slate-600 hover:bg-slate-50" href="#">
+<span class="material-symbols-outlined" data-icon="work">work</span>
+<span>Applications</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg mx-2 my-1 transition-transform duration-200 hover:translate-x-1 text-slate-600 hover:bg-slate-50" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span>Calendar</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg mx-2 my-1 transition-transform duration-200 hover:translate-x-1 text-slate-600 hover:bg-slate-50" href="#">
+<span class="material-symbols-outlined" data-icon="timer">timer</span>
+<span>Timer</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg mx-2 my-1 transition-transform duration-200 hover:translate-x-1 text-slate-600 hover:bg-slate-50" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span>Chatbot</span>
+</a>
+</nav>
+<div class="mt-auto p-4 border-t border-slate-100">
+<button class="w-full bg-secondary text-white py-3 px-4 rounded-xl font-bold shadow-md hover:bg-secondary-container transition-colors mb-4">
+                Upgrade to Pro
+            </button>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-secondary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-error transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1 flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-8 h-16 w-full sticky top-0 z-50 bg-[#F8FAFC] border-b border-slate-200 shadow-sm font-['Inter'] antialiased">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" data-icon="search">search</span>
+<input class="w-full bg-white border border-slate-200 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all" placeholder="Search roadmap, applications, or tasks..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+<div class="flex items-center gap-3 cursor-pointer active:opacity-80">
+<div class="text-right">
+<p class="text-sm font-bold text-slate-900">Alex Rivers</p>
+<p class="text-[10px] text-slate-500 font-medium">Senior Architect</p>
+</div>
+<img alt="Professional user profile" class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover" data-alt="A close-up professional headshot of a confident man in his 30s with a sharp haircut and a friendly expression. He is wearing a dark navy tailored blazer over a crisp white shirt. The background is a blurred office setting with soft, natural morning light coming through large windows, maintaining a high-key, clean professional aesthetic in line with a corporate modern design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDo68aiQDKNZQl8xH1UcTgkuPAOcwe24uhfm7Nz73Ty2CprnkqmlyDOWTAzobMh-2Jqkn1ZAPi2SL6IzmNhkI1L0X0NKAwjmMvQ2QKHjhqB-RWaABYpSTrFSW6SbkXQAhPRANxnLtEQ8duu3IyX5L-RX7yALggJHJ4JvS9Vp7Scn4AJ2bxTzwcuI1VlVUJi2X7fHCBPYMDq1UmoNFefWrzdSRyqjFc9s8RUeLMG-Tdy9Yt5zQrqonFT2VMzptwtDvxEIsDpGsZPsqgZ"/>
+</div>
+</div>
+</header>
+<div class="p-8 max-w-[1400px] mx-auto w-full">
+<!-- Hero Section: Daily Motivational Quote -->
+<section class="mb-lg">
+<div class="relative overflow-hidden rounded-xl bg-primary-container p-10 flex flex-col md:flex-row items-center justify-between gap-8 border border-slate-800">
+<!-- Texture/Glass Effect Background -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+<div class="relative z-10 max-w-2xl">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/20 text-secondary-fixed-dim text-label-caps mb-4">
+<span class="material-symbols-outlined text-[14px]" data-icon="bolt">bolt</span>
+                            Daily Inspiration
+                        </span>
+<h1 class="font-h1 text-h1 text-white mb-4 italic">"Success is not final, failure is not fatal: it is the courage to continue that counts."</h1>
+<p class="text-on-primary-container font-medium">— Winston Churchill</p>
+</div>
+<div class="relative z-10 hidden lg:block">
+<div class="bg-white/5 backdrop-blur-md p-6 rounded-xl border border-white/10 flex flex-col items-center justify-center text-center">
+<div class="w-16 h-16 bg-tertiary-fixed-dim rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-on-tertiary-fixed text-3xl" data-icon="emoji_events">emoji_events</span>
+</div>
+<p class="text-white font-bold text-h3">Tier 3 Master</p>
+<p class="text-slate-400 text-xs">Top 5% of Engineers</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Grid Layout -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Today's Focus (Asymmetric 7-column) -->
+<div class="col-span-12 lg:col-span-7 flex flex-col gap-sm">
+<div class="flex items-center justify-between">
+<h2 class="font-h2 text-h2 text-slate-900">Today's Focus</h2>
+<button class="text-secondary font-semibold text-sm hover:underline">View Roadmap</button>
+</div>
+<div class="space-y-4">
+<!-- Focus Card 1 -->
+<div class="bg-white rounded-lg p-5 border-l-4 border-[#FF6B00] shadow-[0_4px_12px_rgba(15,23,42,0.05)] border-r border-t border-b border-slate-200 flex items-center justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-[#FF6B00]/10 flex items-center justify-center text-[#FF6B00]">
+<span class="material-symbols-outlined" data-icon="code">code</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-slate-900">System Design Mastery</h3>
+<p class="text-slate-500 text-body-md">Complete Section 4: Distributed Caching Mechanisms</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-label-caps">Priority 1</span>
+<button class="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-300 hover:text-secondary-fixed-dim hover:border-secondary transition-colors">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+</button>
+</div>
+</div>
+<!-- Focus Card 2 -->
+<div class="bg-white rounded-lg p-5 border-l-4 border-slate-200 shadow-[0_4px_12px_rgba(15,23,42,0.05)] border-r border-t border-b border-slate-200 flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-slate-900">Portfolio Update</h3>
+<p class="text-slate-500 text-body-md">Draft case study for Project Zenith Infrastructure</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-label-caps">Scheduled</span>
+<button class="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-300 hover:text-secondary-fixed-dim hover:border-secondary transition-colors">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+</button>
+</div>
+</div>
+<!-- Focus Card 3 (Completed Example) -->
+<div class="bg-white rounded-lg p-5 border-l-4 border-tertiary-fixed-dim shadow-[0_4px_12px_rgba(15,23,42,0.05)] border-r border-t border-b border-slate-200 flex items-center justify-between opacity-70">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed-dim/20 flex items-center justify-center text-tertiary-fixed-dim">
+<span class="material-symbols-outlined" data-icon="task_alt">task_alt</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-slate-900 line-through">Morning Skill Drill</h3>
+<p class="text-slate-500 text-body-md">3 Leetcode Medium (Binary Trees)</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="bg-tertiary-fixed-dim/20 text-tertiary-container px-3 py-1 rounded-full text-label-caps">Completed</span>
+<span class="material-symbols-outlined text-tertiary-fixed-dim" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Stats (Asymmetric 5-column) -->
+<div class="col-span-12 lg:col-span-5 flex flex-col gap-sm">
+<h2 class="font-h2 text-h2 text-slate-900">Quick Stats</h2>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="local_fire_department">local_fire_department</span>
+</div>
+<span class="text-xs font-semibold text-orange-600 bg-orange-50 px-2 py-0.5 rounded">+2 today</span>
+</div>
+<p class="text-slate-500 text-label-caps uppercase mb-1">Current Streak</p>
+<h4 class="font-stat-number text-stat-number text-slate-900">12 <span class="text-lg font-normal text-slate-400">Days</span></h4>
+</div>
+<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+</div>
+<span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">Target: 6h</span>
+</div>
+<p class="text-slate-500 text-label-caps uppercase mb-1">Study Hours</p>
+<h4 class="font-stat-number text-stat-number text-slate-900">4.5 <span class="text-lg font-normal text-slate-400">Hours</span></h4>
+</div>
+<!-- Progress Circle Chart Component (Placeholder representation) -->
+<div class="col-span-2 bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center gap-8">
+<div class="relative w-24 h-24 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-slate-100" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-secondary" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="62.8" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-xl font-bold text-slate-900">75%</span>
+</div>
+</div>
+<div class="flex-1">
+<h4 class="text-h3 font-h3 text-slate-900 mb-1">Career Goal: Tech Lead</h4>
+<p class="text-body-md text-slate-500 mb-4">You are 3 milestones away from your quarterly target.</p>
+<div class="flex items-center gap-2">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-tertiary-fixed-dim border-2 border-white"></div>
+<div class="w-6 h-6 rounded-full bg-secondary border-2 border-white"></div>
+<div class="w-6 h-6 rounded-full bg-slate-300 border-2 border-white"></div>
+</div>
+<span class="text-xs text-slate-400 font-medium">+120 Points Earned</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Applications (Full Width) -->
+<div class="col-span-12 flex flex-col gap-sm">
+<div class="flex items-center justify-between">
+<h2 class="font-h2 text-h2 text-slate-900">Recent Applications</h2>
+<button class="bg-white border border-slate-200 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-colors shadow-sm">View Pipeline</button>
+</div>
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50 border-b border-slate-200">
+<tr>
+<th class="px-6 py-4 text-label-caps text-slate-500 uppercase">Company</th>
+<th class="px-6 py-4 text-label-caps text-slate-500 uppercase">Role</th>
+<th class="px-6 py-4 text-label-caps text-slate-500 uppercase">Date</th>
+<th class="px-6 py-4 text-label-caps text-slate-500 uppercase">Status</th>
+<th class="px-6 py-4 text-label-caps text-slate-500 uppercase">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-slate-50/50 transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-slate-900 flex items-center justify-center text-white text-[10px] font-bold">N</div>
+<span class="font-semibold text-slate-900">NexGen AI</span>
+</td>
+<td class="px-6 py-4 text-slate-600">Senior Platform Engineer</td>
+<td class="px-6 py-4 text-slate-500">Oct 24, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Technical Interview</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-slate-400 hover:text-secondary"><span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span></button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/50 transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-blue-600 flex items-center justify-center text-white text-[10px] font-bold">S</div>
+<span class="font-semibold text-slate-900">Stellar SaaS</span>
+</td>
+<td class="px-6 py-4 text-slate-600">Staff Architect</td>
+<td class="px-6 py-4 text-slate-500">Oct 22, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-tertiary-fixed-dim/20 text-tertiary-container">Offer Extended</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-slate-400 hover:text-secondary"><span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span></button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/50 transition-colors">
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-emerald-600 flex items-center justify-center text-white text-[10px] font-bold">V</div>
+<span class="font-semibold text-slate-900">Vortex FinTech</span>
+</td>
+<td class="px-6 py-4 text-slate-600">Lead Backend dev</td>
+<td class="px-6 py-4 text-slate-500">Oct 20, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600">Applied</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-slate-400 hover:text-secondary"><span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky FAB -->
+<div class="fixed bottom-10 right-10 z-50">
+<button class="flex items-center gap-2 bg-secondary text-white px-6 py-4 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all group">
+<span class="material-symbols-outlined group-hover:rotate-12 transition-transform" data-icon="add">add</span>
+<span class="font-bold">New Task</span>
+</button>
+</div>
+</main>
+</body></html>
