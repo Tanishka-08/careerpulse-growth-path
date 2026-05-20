@@ -137,6 +137,43 @@ def delete_job(job_id):
     db.session.commit()
     return redirect(url_for('applications'))
 
+@app.route('/add_event', methods=['POST'])
+def add_event():
+    user = User.query.first()
+    title = request.form.get('title')
+    event_type = request.form.get('event_type')
+    date_str = request.form.get('date') # YYYY-MM-DD
+    start_time_str = request.form.get('start_time') # HH:MM
+    end_time_str = request.form.get('end_time') # HH:MM
+    
+    if title and event_type and date_str and start_time_str:
+        try:
+            start_dt = datetime.strptime(f"{date_str} {start_time_str}", "%Y-%m-%d %H:%M")
+            end_dt = None
+            if end_time_str:
+                end_dt = datetime.strptime(f"{date_str} {end_time_str}", "%Y-%m-%d %H:%M")
+                
+            new_event = Event(
+                user_id=user.id,
+                title=title,
+                event_type=event_type,
+                start_time=start_dt,
+                end_time=end_dt
+            )
+            db.session.add(new_event)
+            db.session.commit()
+        except Exception as e:
+            app.logger.error(f"Error adding event: {e}")
+            
+    return redirect(url_for('calendar'))
+
+@app.route('/delete_event/<int:event_id>', methods=['POST'])
+def delete_event(event_id):
+    event = Event.query.get_or_404(event_id)
+    db.session.delete(event)
+    db.session.commit()
+    return redirect(url_for('calendar'))
+
 @app.route('/log_session', methods=['POST'])
 def log_session():
     user = User.query.first()
