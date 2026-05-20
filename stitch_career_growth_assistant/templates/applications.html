@@ -47,7 +47,7 @@
                         {% endif %}
                     </td>
                     <td class="px-6 py-4 text-right">
-                        <form action="/delete_job/{{ job.id }}" method="POST" class="inline">
+                        <form action="/delete_job/{{ job.id }}" method="POST" class="inline" onsubmit="this.querySelectorAll('button').forEach(b => b.disabled = true);">
                             <button type="submit" class="text-slate-400 hover:text-red-600 transition-colors" title="Delete">
                                 <span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
                             </button>

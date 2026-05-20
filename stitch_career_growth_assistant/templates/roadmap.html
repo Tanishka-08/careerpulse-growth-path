@@ -26,7 +26,7 @@
                 <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 cursor-pointer hover:border-blue-300 transition-colors">
                     <div class="flex items-start justify-between mb-2">
                         <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-slate-100 text-slate-600">Priority {{ task.priority }}</span>
-                        <form action="/update_task/{{ task.id }}" method="POST">
+                        <form action="/update_task/{{ task.id }}" method="POST" onsubmit="this.querySelectorAll('button').forEach(b => b.disabled = true);">
                             <input type="hidden" name="status" value="In Progress">
                             <button type="submit" class="text-slate-400 hover:text-blue-600" title="Move to In Progress"><span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span></button>
                         </form>
@@ -51,11 +51,11 @@
                     <div class="flex items-start justify-between mb-2">
                         <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-blue-100 text-blue-600">Priority {{ task.priority }}</span>
                         <div class="flex gap-1">
-                            <form action="/update_task/{{ task.id }}" method="POST">
+                            <form action="/update_task/{{ task.id }}" method="POST" onsubmit="this.querySelectorAll('button').forEach(b => b.disabled = true);">
                                 <input type="hidden" name="status" value="Pending">
                                 <button type="submit" class="text-slate-400 hover:text-slate-600"><span class="material-symbols-outlined text-sm" data-icon="arrow_back">arrow_back</span></button>
                             </form>
-                            <form action="/update_task/{{ task.id }}" method="POST">
+                            <form action="/update_task/{{ task.id }}" method="POST" onsubmit="this.querySelectorAll('button').forEach(b => b.disabled = true);">
                                 <input type="hidden" name="status" value="Completed">
                                 <button type="submit" class="text-slate-400 hover:text-emerald-600"><span class="material-symbols-outlined text-sm" data-icon="check">check</span></button>
                             </form>
@@ -80,7 +80,7 @@
                 <div class="bg-white p-4 rounded-lg shadow-sm border border-emerald-200 opacity-75">
                     <div class="flex items-start justify-between mb-2">
                         <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-100 text-emerald-700">Done</span>
-                        <form action="/delete_task/{{ task.id }}" method="POST">
+                        <form action="/delete_task/{{ task.id }}" method="POST" onsubmit="this.querySelectorAll('button').forEach(b => b.disabled = true);">
                             <button type="submit" class="text-slate-400 hover:text-red-600"><span class="material-symbols-outlined text-sm" data-icon="delete">delete</span></button>
                         </form>
                     </div>
