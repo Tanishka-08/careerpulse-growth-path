@@ -19,17 +19,22 @@
         <!-- Pending Column -->
         <div class="bg-slate-50 rounded-xl border border-slate-200 p-4 flex flex-col gap-4">
             <h2 class="font-bold text-slate-700 flex items-center justify-between uppercase text-xs tracking-wider">
-                Pending <span class="bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full">{{ tasks|selectattr('status', 'equalto', 'Pending')|list|length }}</span>
+                Pending <span class="bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full">{{ (tasks|selectattr('status', 'equalto', 'Pending')|list|length) + (tasks|selectattr('status', 'equalto', 'Scheduled')|list|length) }}</span>
             </h2>
             <div class="space-y-3">
-                {% for task in tasks if task.status == 'Pending' %}
+                {% for task in tasks if task.status == 'Pending' or task.status == 'Scheduled' %}
                 <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 cursor-pointer hover:border-blue-300 transition-colors">
                     <div class="flex items-start justify-between mb-2">
                         <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-slate-100 text-slate-600">Priority {{ task.priority }}</span>
-                        <form action="/update_task/{{ task.id }}" method="POST" onsubmit="this.querySelectorAll('button').forEach(b => b.disabled = true);">
-                            <input type="hidden" name="status" value="In Progress">
-                            <button type="submit" class="text-slate-400 hover:text-blue-600" title="Move to In Progress"><span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span></button>
-                        </form>
+                        <div class="flex gap-2">
+                            <form action="/delete_task/{{ task.id }}" method="POST" onsubmit="this.querySelectorAll('button').forEach(b => b.disabled = true);" class="inline">
+                                <button type="submit" class="text-slate-400 hover:text-red-600" title="Delete Task"><span class="material-symbols-outlined text-sm" data-icon="delete">delete</span></button>
+                            </form>
+                            <form action="/update_task/{{ task.id }}" method="POST" onsubmit="this.querySelectorAll('button').forEach(b => b.disabled = true);" class="inline">
+                                <input type="hidden" name="status" value="In Progress">
+                                <button type="submit" class="text-slate-400 hover:text-blue-600" title="Move to In Progress"><span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span></button>
+                            </form>
+                        </div>
                     </div>
                     <h3 class="font-semibold text-slate-900 text-sm mb-2">{{ task.title }}</h3>
                     <div class="w-full bg-slate-100 h-1.5 rounded-full">
@@ -50,12 +55,15 @@
                 <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 cursor-pointer hover:border-blue-300 transition-colors">
                     <div class="flex items-start justify-between mb-2">
                         <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-blue-100 text-blue-600">Priority {{ task.priority }}</span>
-                        <div class="flex gap-1">
-                            <form action="/update_task/{{ task.id }}" method="POST" onsubmit="this.querySelectorAll('button').forEach(b => b.disabled = true);">
+                        <div class="flex gap-1.5">
+                            <form action="/delete_task/{{ task.id }}" method="POST" onsubmit="this.querySelectorAll('button').forEach(b => b.disabled = true);" class="inline">
+                                <button type="submit" class="text-slate-400 hover:text-red-600" title="Delete Task"><span class="material-symbols-outlined text-sm" data-icon="delete">delete</span></button>
+                            </form>
+                            <form action="/update_task/{{ task.id }}" method="POST" onsubmit="this.querySelectorAll('button').forEach(b => b.disabled = true);" class="inline">
                                 <input type="hidden" name="status" value="Pending">
                                 <button type="submit" class="text-slate-400 hover:text-slate-600"><span class="material-symbols-outlined text-sm" data-icon="arrow_back">arrow_back</span></button>
                             </form>
-                            <form action="/update_task/{{ task.id }}" method="POST" onsubmit="this.querySelectorAll('button').forEach(b => b.disabled = true);">
+                            <form action="/update_task/{{ task.id }}" method="POST" onsubmit="this.querySelectorAll('button').forEach(b => b.disabled = true);" class="inline">
                                 <input type="hidden" name="status" value="Completed">
                                 <button type="submit" class="text-slate-400 hover:text-emerald-600"><span class="material-symbols-outlined text-sm" data-icon="check">check</span></button>
                             </form>

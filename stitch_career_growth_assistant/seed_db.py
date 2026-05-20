@@ -46,29 +46,9 @@ def seed_database(app_instance=None, drop_existing=True):
         )
         db.session.add_all([job1, job2, job3])
 
-        # 3. Tasks
-        task1 = Task(
-            user_id=user1.id,
-            title="System Design Mastery: Complete Section 4",
-            progress_percentage=0,
-            status="Pending",
-            priority=1
-        )
-        task2 = Task(
-            user_id=user1.id,
-            title="Portfolio Update: Draft case study",
-            progress_percentage=0,
-            status="Scheduled",
-            priority=2
-        )
-        task3 = Task(
-            user_id=user1.id,
-            title="Morning Skill Drill: 3 Leetcode Medium",
-            progress_percentage=100,
-            status="Completed",
-            priority=1
-        )
-        db.session.add_all([task1, task2, task3])
+        # 3. Tasks (Starting with a fresh, empty task list for the user)
+        # No tasks seeded by default
+
 
         # 4. Events
         now = datetime.now()
