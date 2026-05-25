@@ -22,69 +22,21 @@ def seed_database(app_instance=None, drop_existing=True):
         db.session.add(user1)
         db.session.commit()
 
-        # 2. Job Applications
-        job1 = JobApplication(
-            user_id=user1.id,
-            company="NexGen AI",
-            role="Senior Platform Engineer",
-            status="Technical Interview",
-            applied_date=date(2023, 10, 24)
-        )
-        job2 = JobApplication(
-            user_id=user1.id,
-            company="Stellar SaaS",
-            role="Staff Architect",
-            status="Offer Extended",
-            applied_date=date(2023, 10, 22)
-        )
-        job3 = JobApplication(
-            user_id=user1.id,
-            company="Vortex FinTech",
-            role="Lead Backend dev",
-            status="Applied",
-            applied_date=date(2023, 10, 20)
-        )
-        db.session.add_all([job1, job2, job3])
+        # 2. Job Applications (No default applications seeded)
+        # Starting with a fresh, empty job application list
+        pass
 
         # 3. Tasks (Starting with a fresh, empty task list for the user)
         # No tasks seeded by default
 
 
-        # 4. Events
-        now = datetime.now()
-        event1 = Event(
-            user_id=user1.id,
-            title="System Design Study",
-            event_type="Study",
-            start_time=now + timedelta(days=2, hours=10)
-        )
-        event2 = Event(
-            user_id=user1.id,
-            title="Mock Interview",
-            event_type="Interview",
-            start_time=now + timedelta(days=3, hours=14),
-            end_time=now + timedelta(days=3, hours=15, minutes=30)
-        )
-        event3 = Event(
-            user_id=user1.id,
-            title="Google Resume DL",
-            event_type="Deadline",
-            start_time=now + timedelta(days=4, hours=23, minutes=59)
-        )
-        db.session.add_all([event1, event2, event3])
+        # 4. Events (No default events seeded)
+        # Starting with a fresh, empty calendar list
+        pass
 
         # 5. Study Sessions
-        session1 = StudySession(
-            user_id=user1.id,
-            duration_minutes=120,
-            date=now.date()
-        )
-        session2 = StudySession(
-            user_id=user1.id,
-            duration_minutes=150,
-            date=now.date() - timedelta(days=1)
-        )
-        db.session.add_all([session1, session2])
+        # Starting with a fresh, empty study session list
+        pass
 
         db.session.commit()
         print("Database seeded successfully!")

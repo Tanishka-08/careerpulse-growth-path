@@ -40,6 +40,14 @@ with app.app_context():
         except Exception as e:
             app.logger.error(f"Error auto-seeding database: {e}")
 
+    # Clean up old seeded default items from the database to ensure a fully clean start
+    try:
+        JobApplication.query.filter(JobApplication.company.in_(['NexGen AI', 'Stellar SaaS', 'Vortex FinTech'])).delete(synchronize_session=False)
+        Event.query.filter(Event.title.in_(['System Design Study', 'Mock Interview', 'Google Resume DL'])).delete(synchronize_session=False)
+        db.session.commit()
+    except Exception as cleanup_err:
+        app.logger.error(f"Error cleaning up old default seeded items: {cleanup_err}")
+
 @app.route('/')
 def index():
     user = User.query.first()
