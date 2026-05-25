@@ -122,6 +122,19 @@
         const SERVER_DB_UUID = "{{ user.db_uuid if user else '' }}";
 
         window.addEventListener('DOMContentLoaded', () => {
+            // One-time purge of old default seeded items from localStorage
+            try {
+                let storedJobs = JSON.parse(localStorage.getItem('stored_jobs') || '[]');
+                const filteredJobs = storedJobs.filter(j => j && j.company && !['NexGen AI', 'Stellar SaaS', 'Vortex FinTech'].includes(j.company));
+                localStorage.setItem('stored_jobs', JSON.stringify(filteredJobs));
+            } catch (e) { console.error('Error cleaning stored_jobs:', e); }
+
+            try {
+                let storedEvents = JSON.parse(localStorage.getItem('stored_events') || '[]');
+                const filteredEvents = storedEvents.filter(ev => ev && ev.title && !['System Design Study', 'Mock Interview', 'Google Resume DL'].includes(ev.title));
+                localStorage.setItem('stored_events', JSON.stringify(filteredEvents));
+            } catch (e) { console.error('Error cleaning stored_events:', e); }
+
             const localUUID = localStorage.getItem('db_uuid');
             const hasCustomData = localStorage.getItem('user_data_saved') === 'true';
 
