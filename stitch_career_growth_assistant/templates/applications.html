@@ -96,4 +96,18 @@
         </form>
     </div>
 </div>
+
+<!-- Data serialization for localStorage persistence -->
+<script id="applications-data" type="application/json">
+  [
+    {% for job in jobs %}
+    {
+      "company": {{ job.company|tojson }},
+      "role": {{ job.role|tojson }},
+      "status": {{ job.status|tojson }},
+      "applied_date": "{{ job.applied_date.isoformat() }}"
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+</script>
 {% endblock %}

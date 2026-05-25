@@ -89,6 +89,7 @@
         html.dark body { background-color: #0f172a !important; color: #f1f5f9 !important; }
         html.dark aside, html.dark header, html.dark .bg-white { background-color: #1e293b !important; border-color: #334155 !important; color: #f1f5f9 !important; }
         html.dark .text-slate-900 { color: #f8fafc !important; }
+        html.dark .text-slate-700, html.dark .text-slate-800 { color: #cbd5e1 !important; }
         html.dark .text-slate-600, html.dark .text-slate-500, html.dark .text-slate-400 { color: #cbd5e1 !important; }
         html.dark .bg-slate-50, html.dark .bg-slate-100 { background-color: #334155 !important; }
         html.dark .border-slate-200, html.dark .border-slate-100 { border-color: #334155 !important; }
@@ -115,6 +116,94 @@
                 html.classList.remove('light');
                 html.classList.add('dark');
                 localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        const SERVER_DB_UUID = "{{ user.db_uuid if user else '' }}";
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const localUUID = localStorage.getItem('db_uuid');
+            const hasCustomData = localStorage.getItem('user_data_saved') === 'true';
+
+            if (SERVER_DB_UUID && localUUID !== SERVER_DB_UUID) {
+                if (hasCustomData) {
+                    const payload = {
+                        tasks: JSON.parse(localStorage.getItem('stored_tasks') || '[]'),
+                        jobs: JSON.parse(localStorage.getItem('stored_jobs') || '[]'),
+                        events: JSON.parse(localStorage.getItem('stored_events') || '[]'),
+                        chat_messages: JSON.parse(localStorage.getItem('stored_chat_messages') || '[]'),
+                        study_sessions: JSON.parse(localStorage.getItem('stored_study_sessions') || '[]')
+                    };
+
+                    fetch('/api/restore', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            localStorage.setItem('db_uuid', SERVER_DB_UUID);
+                            window.location.reload();
+                        } else {
+                            console.error('Failed to restore database:', data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error synchronizing database:', error);
+                    });
+                    return;
+                } else {
+                    capturePageData();
+                    localStorage.setItem('db_uuid', SERVER_DB_UUID);
+                    localStorage.setItem('user_data_saved', 'true');
+                }
+            } else {
+                capturePageData();
+            }
+        });
+
+        function capturePageData() {
+            const roadmapElem = document.getElementById('roadmap-data');
+            if (roadmapElem) {
+                try {
+                    const tasks = JSON.parse(roadmapElem.textContent);
+                    localStorage.setItem('stored_tasks', JSON.stringify(tasks));
+                } catch (e) { console.error('Error parsing roadmap tasks:', e); }
+            }
+
+            const jobsElem = document.getElementById('applications-data');
+            if (jobsElem) {
+                try {
+                    const jobs = JSON.parse(jobsElem.textContent);
+                    localStorage.setItem('stored_jobs', JSON.stringify(jobs));
+                } catch (e) { console.error('Error parsing jobs:', e); }
+            }
+
+            const eventsElem = document.getElementById('calendar-data');
+            if (eventsElem) {
+                try {
+                    const events = JSON.parse(eventsElem.textContent);
+                    localStorage.setItem('stored_events', JSON.stringify(events));
+                } catch (e) { console.error('Error parsing events:', e); }
+            }
+
+            const chatbotElem = document.getElementById('chatbot-data');
+            if (chatbotElem) {
+                try {
+                    const messages = JSON.parse(chatbotElem.textContent);
+                    localStorage.setItem('stored_chat_messages', JSON.stringify(messages));
+                } catch (e) { console.error('Error parsing chatbot messages:', e); }
+            }
+
+            const sessionsElem = document.getElementById('study-sessions-data');
+            if (sessionsElem) {
+                try {
+                    const sessions = JSON.parse(sessionsElem.textContent);
+                    localStorage.setItem('stored_study_sessions', JSON.stringify(sessions));
+                } catch (e) { console.error('Error parsing study sessions:', e); }
             }
         }
     </script>

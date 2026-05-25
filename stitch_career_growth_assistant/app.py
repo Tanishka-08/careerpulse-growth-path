@@ -19,7 +19,18 @@ from models import db, User, Task, Event, JobApplication, StudySession, ChatMess
 db.init_app(app)
 
 with app.app_context():
-    db.create_all()
+    try:
+        db.create_all()
+        # Defensive schema check: query the first user to ensure db_uuid column is present
+        User.query.first()
+    except Exception as e:
+        app.logger.warning(f"Database schema mismatch or corruption detected ({e}). Re-creating database...")
+        try:
+            db.drop_all()
+            db.create_all()
+        except Exception as drop_err:
+            app.logger.error(f"Failed to drop/re-create database: {drop_err}")
+
     # Auto-seed the database if no User exists to prevent crash on spin-up
     if User.query.first() is None:
         try:
@@ -66,7 +77,8 @@ def progress():
 @app.route('/timer')
 def timer():
     user = User.query.first()
-    return render_template('timer.html', user=user)
+    sessions = StudySession.query.filter_by(user_id=user.id).all()
+    return render_template('timer.html', user=user, sessions=sessions)
 
 @app.route('/chatbot')
 def chatbot():
@@ -221,6 +233,98 @@ def chat():
     db.session.commit()
     
     return redirect(url_for('chatbot'))
+
+@app.route('/api/restore', methods=['POST'])
+def api_restore():
+    data = request.get_json()
+    if not data:
+        return {"success": False, "message": "No data provided"}, 400
+        
+    user = User.query.first()
+    if not user:
+        return {"success": False, "message": "No user found"}, 400
+        
+    # Restore Tasks
+    if 'tasks' in data:
+        Task.query.filter_by(user_id=user.id).delete()
+        for t in data['tasks']:
+            task = Task(
+                user_id=user.id,
+                title=t['title'],
+                priority=t['priority'],
+                status=t['status'],
+                progress_percentage=t.get('progress_percentage', 0)
+            )
+            db.session.add(task)
+            
+    # Restore Job Applications
+    if 'jobs' in data:
+        JobApplication.query.filter_by(user_id=user.id).delete()
+        for j in data['jobs']:
+            try:
+                app_date = datetime.strptime(j['applied_date'], "%Y-%m-%d").date()
+            except Exception:
+                app_date = datetime.now().date()
+            job = JobApplication(
+                user_id=user.id,
+                company=j['company'],
+                role=j['role'],
+                status=j['status'],
+                applied_date=app_date
+            )
+            db.session.add(job)
+            
+    # Restore Events
+    if 'events' in data:
+        Event.query.filter_by(user_id=user.id).delete()
+        for e in data['events']:
+            try:
+                start_dt = datetime.fromisoformat(e['start_time'])
+                end_dt = datetime.fromisoformat(e['end_time']) if e.get('end_time') else None
+            except Exception:
+                continue
+            event = Event(
+                user_id=user.id,
+                title=e['title'],
+                event_type=e['event_type'],
+                start_time=start_dt,
+                end_time=end_dt
+            )
+            db.session.add(event)
+            
+    # Restore Chat Messages
+    if 'chat_messages' in data:
+        ChatMessage.query.filter_by(user_id=user.id).delete()
+        for m in data['chat_messages']:
+            try:
+                timestamp = datetime.fromisoformat(m['timestamp'])
+            except Exception:
+                timestamp = datetime.utcnow()
+            msg = ChatMessage(
+                user_id=user.id,
+                role=m['role'],
+                content=m['content'],
+                timestamp=timestamp
+            )
+            db.session.add(msg)
+            
+    # Restore Study Sessions
+    if 'study_sessions' in data:
+        StudySession.query.filter_by(user_id=user.id).delete()
+        for s in data['study_sessions']:
+            try:
+                s_date = datetime.strptime(s['date'], "%Y-%m-%d").date()
+            except Exception:
+                s_date = datetime.now().date()
+            session = StudySession(
+                user_id=user.id,
+                duration_minutes=s['duration_minutes'],
+                date=s_date
+            )
+            db.session.add(session)
+            
+    db.session.commit()
+    return {"success": True, "message": "Database restored successfully"}
 
 if __name__ == '__main__':
     app.run(debug=True)

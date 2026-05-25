@@ -66,5 +66,18 @@
             </button>
         </form>
     </div>
+
+    <!-- Data serialization for localStorage persistence -->
+    <script id="chatbot-data" type="application/json">
+      [
+        {% for msg in messages %}
+        {
+          "role": {{ msg.role|tojson }},
+          "content": {{ msg.content|tojson }},
+          "timestamp": "{{ msg.timestamp.isoformat() }}"
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+      ]
+    </script>
 </main>
 {% endblock %}

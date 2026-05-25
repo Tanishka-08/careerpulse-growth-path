@@ -608,4 +608,18 @@
     // 11. Initial execution
     goToToday();
 </script>
+
+<!-- Data serialization for localStorage persistence -->
+<script id="calendar-data" type="application/json">
+  [
+    {% for event in events %}
+    {
+      "title": {{ event.title|tojson }},
+      "event_type": {{ event.event_type|tojson }},
+      "start_time": "{{ event.start_time.isoformat() }}",
+      "end_time": {% if event.end_time %}"{{ event.end_time.isoformat() }}"{% else %}null{% endif %}
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+</script>
 {% endblock %}

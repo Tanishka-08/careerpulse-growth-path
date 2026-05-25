@@ -76,5 +76,17 @@
             </div>
         </div>
     </div>
+
+    <!-- Data serialization for localStorage persistence -->
+    <script id="study-sessions-data" type="application/json">
+      [
+        {% for session in sessions %}
+        {
+          "duration_minutes": {{ session.duration_minutes }},
+          "date": "{{ session.date.isoformat() }}"
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+      ]
+    </script>
 </main>
 {% endblock %}
